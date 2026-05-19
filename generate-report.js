@@ -9,6 +9,7 @@ const DEFAULT_DATA = path.resolve(__dirname, "data.json");
 const DEFAULT_OUTPUT = path.resolve(__dirname, "dijital-performans-raporu.pdf");
 const DEFAULT_HTML = path.resolve(__dirname, "dijital-performans-raporu.html");
 const DEFAULT_TOP3_DIR = path.resolve(__dirname, "top3");
+const DEFAULT_TOP3_SUB_DIR = path.resolve(__dirname, "top3-sub");
 const DEFAULT_LOGO_DIR = path.resolve(__dirname, "logo");
 const DEFAULT_SOCIAL_DIR = path.resolve(__dirname, "social-media");
 
@@ -17,6 +18,7 @@ const dataFile = path.resolve(args.data || DEFAULT_DATA);
 const outputFile = path.resolve(args.output || DEFAULT_OUTPUT);
 const htmlFile = path.resolve(args.html || DEFAULT_HTML);
 const top3Dir = path.resolve(args.top3 || DEFAULT_TOP3_DIR);
+const top3SubDir = path.resolve(args["top3-sub"] || DEFAULT_TOP3_SUB_DIR);
 const logoDir = path.resolve(args.logo || DEFAULT_LOGO_DIR);
 const socialDir = path.resolve(args.social || DEFAULT_SOCIAL_DIR);
 const title = args.title || "Dijital Performans Analizi";
@@ -50,6 +52,7 @@ const html = renderHtml({
   totalInteractions,
   methodText,
   top3Images: getTop3Images(top3Dir),
+  top3SubImages: getTop3Images(top3SubDir),
   logoImage: getLogoImage(logoDir),
   socialImages: getSocialImages(socialDir)
 });
@@ -139,7 +142,7 @@ function toFileUrl(filePath) {
   return `file://${filePath.split(path.sep).map(encodeURIComponent).join("/")}`;
 }
 
-function renderHtml({ rows, title, category, dateRange, totalInteractions, methodText, top3Images, logoImage, socialImages }) {
+function renderHtml({ rows, title, category, dateRange, totalInteractions, methodText, top3Images, top3SubImages, logoImage, socialImages }) {
   const max = Math.max(15, Math.ceil(rows[0].percentage / 5) * 5);
   const top = rows.slice(0, 3);
   const cardOrder = [top[1], top[0], top[2]].filter(Boolean);
@@ -308,6 +311,31 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       font-size: 92px;
       font-weight: 800;
       background: radial-gradient(circle, rgba(255,255,255,.28), rgba(255,255,255,.04) 60%);
+    }
+    .sub-portrait {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: 138px;
+      width: var(--sub-size, 128px);
+      height: var(--sub-size, 128px);
+      transform: translateX(-50%);
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255,255,255,.94);
+      border: 4px solid rgba(255,255,255,.92);
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+    }
+    .person-card.rank-1 .sub-portrait {
+      bottom: 142px;
+      width: var(--sub-size, 150px);
+      height: var(--sub-size, 150px);
+    }
+    .sub-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
     .card-footer {
       position: absolute;
@@ -553,7 +581,7 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     </section>
 
     <section class="cards">
-      ${cardOrder.map((person) => renderCard(person, rows.indexOf(person) + 1, top3Images, topNameSize)).join("")}
+      ${cardOrder.map((person) => renderCard(person, rows.indexOf(person) + 1, top3Images, top3SubImages, topNameSize)).join("")}
     </section>
 
     <section class="panel chart">
@@ -603,13 +631,15 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
 </html>`;
 }
 
-function renderCard(person, rank, top3Images, nameSize) {
+function renderCard(person, rank, top3Images, top3SubImages, nameSize) {
   const theme = getTheme(rank);
   const image = top3Images[rank] || "";
+  const subImage = top3SubImages[rank] || "";
   const isRankOne = rank === 1 ? " rank-1" : "";
   return `<article class="person-card${isRankOne}" style="--accent:${theme.accent}; --name-size:${nameSize}px;">
     <div class="rank">${rank}</div>
     <div class="portrait">${image ? `<img src="${toFileUrl(image)}" alt="">` : `<div class="placeholder">${escapeHtml(initials(person.name))}</div>`}</div>
+    ${subImage ? `<div class="sub-portrait"><img src="${toFileUrl(subImage)}" alt=""></div>` : ""}
     <div class="card-footer">
       <div class="name">${escapeHtml(person.name)}</div>
       <div class="shine"></div>

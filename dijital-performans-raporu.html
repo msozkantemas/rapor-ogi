@@ -152,6 +152,31 @@
       font-weight: 800;
       background: radial-gradient(circle, rgba(255,255,255,.28), rgba(255,255,255,.04) 60%);
     }
+    .sub-portrait {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: 138px;
+      width: var(--sub-size, 128px);
+      height: var(--sub-size, 128px);
+      transform: translateX(-50%);
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255,255,255,.94);
+      border: 4px solid rgba(255,255,255,.92);
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
+    }
+    .person-card.rank-1 .sub-portrait {
+      bottom: 142px;
+      width: var(--sub-size, 150px);
+      height: var(--sub-size, 150px);
+    }
+    .sub-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
     .card-footer {
       position: absolute;
       left: 14px;
@@ -399,6 +424,7 @@
       <article class="person-card" style="--accent:#e7e9ed; --name-size:14px;">
     <div class="rank">2</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/2.jpeg" alt=""></div>
+    <div class="sub-portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3-sub/2.jpeg" alt=""></div>
     <div class="card-footer">
       <div class="name">Konya Büyükşehir Belediyesi</div>
       <div class="shine"></div>
@@ -407,6 +433,7 @@
   </article><article class="person-card rank-1" style="--accent:#ffc619; --name-size:14px;">
     <div class="rank">1</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/1.jpeg" alt=""></div>
+    <div class="sub-portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3-sub/1.jpeg" alt=""></div>
     <div class="card-footer">
       <div class="name">Mersin Büyükşehir Belediyesi</div>
       <div class="shine"></div>
@@ -415,6 +442,7 @@
   </article><article class="person-card" style="--accent:#f4761e; --name-size:14px;">
     <div class="rank">3</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/3.jpeg" alt=""></div>
+    <div class="sub-portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3-sub/3.jpeg" alt=""></div>
     <div class="card-footer">
       <div class="name">Kahramanmaraş Büyükşehir Belediyesi</div>
       <div class="shine"></div>
