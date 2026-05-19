@@ -20,8 +20,8 @@ const top3Dir = path.resolve(args.top3 || DEFAULT_TOP3_DIR);
 const logoDir = path.resolve(args.logo || DEFAULT_LOGO_DIR);
 const socialDir = path.resolve(args.social || DEFAULT_SOCIAL_DIR);
 const title = args.title || "Dijital Performans Analizi";
-const category = args.category || "GAZETECİLER";
-const dateRange = args.date || "4 Mayıs 2026 - 10 Mayıs 2026";
+const category = args.category || "MESSI";
+const dateRange = args.date || "10 Mayıs 2026 - 120 Mayıs 2026";
 const totalInteractions = args.total || "30.051.307";
 const methodText = formatArgText(args.method) || [
   "DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10'da yer alanlar",
@@ -204,13 +204,13 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .brand {
       text-align: center;
-      min-height: 126px;
+      min-height: 142px;
       display: grid;
       place-items: center;
     }
     .brand img {
-      max-width: 285px;
-      max-height: 126px;
+      max-width: 320px;
+      max-height: 142px;
       object-fit: contain;
       display: block;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,.28));
@@ -241,9 +241,9 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       border-radius: 12px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 50% 24%, rgba(255,255,255,.42), rgba(19,26,35,.76) 39%, rgba(2,13,23,.96) 78%),
+        linear-gradient(180deg, rgba(10,25,39,.7) 0%, rgba(3,15,26,.95) 72%, rgba(3,15,26,.98) 100%),
         #0b1723;
-      box-shadow: inset 0 0 55px rgba(255,255,255,.07), 0 16px 36px rgba(0,0,0,.28);
+      box-shadow: inset 0 0 28px rgba(255,255,255,.04);
     }
     .person-card.rank-1 { height: 440px; }
     .rank {
@@ -258,17 +258,19 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .portrait {
       position: absolute;
-      inset: 12px 16px 98px;
+      inset: 12px 16px 118px;
       display: flex;
       justify-content: center;
       align-items: end;
+      overflow: hidden;
+      border-radius: 6px;
+      background: transparent;
     }
     .portrait img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center top;
-      filter: drop-shadow(0 16px 20px rgba(0,0,0,.42));
       border-radius: 6px;
     }
     .portrait .placeholder {
@@ -292,12 +294,11 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       font-size: var(--name-size, 29px);
       line-height: 1.1;
       font-weight: 800;
-      text-shadow: 0 2px 8px #000;
       white-space: nowrap;
       overflow: visible;
     }
     .shine {
-      margin: 10px auto 10px;
+      margin: 8px auto 9px;
       width: 82%;
       height: 2px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
@@ -305,7 +306,7 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .percent {
       color: var(--accent);
-      font-size: 52px;
+      font-size: 50px;
       line-height: .92;
       font-weight: 900;
     }
@@ -448,7 +449,13 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       place-items: center;
       border: 1px solid rgba(57,126,209,.5);
       background: radial-gradient(circle, rgba(20,96,180,.35), rgba(8,22,35,.7));
-      font-size: 34px;
+    }
+    .source-icon svg {
+      width: 35px;
+      height: 35px;
+      display: block;
+      color: #e8f1ff;
+      stroke-width: 1.8;
     }
     .social-icons {
       width: 62px;
@@ -544,14 +551,14 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
         </div>
       </div>
       <div class="source">
-        <div class="source-icon">▤</div>
+        ${renderPressIcon()}
         <div>
           <div class="source-title">Yazılı Basın</div>
           <div class="source-text">Haberler, Köşe yazıları,<br>Gazeteler, Blog/Forum/Sözlük</div>
         </div>
       </div>
       <div class="source">
-        <div class="source-icon">▣</div>
+        ${renderTvIcon()}
         <div>
           <div class="source-title">TV</div>
           <div class="source-text">Ulusal TV kanalları ve<br>televizyon programları</div>
@@ -642,6 +649,27 @@ function renderSocialIcons(images) {
   return `<div class="social-icons">${images
     .map((image) => `<img src="${toFileUrl(image)}" alt="">`)
     .join("")}</div>`;
+}
+
+function renderPressIcon() {
+  return `<div class="source-icon">
+    <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="8" width="28" height="32" rx="2"></rect>
+      <path d="M16 16h16M16 22h16M16 28h16M16 34h10"></path>
+      <path d="M38 14h4v22a4 4 0 0 1-4 4"></path>
+    </svg>
+  </div>`;
+}
+
+function renderTvIcon() {
+  return `<div class="source-icon">
+    <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="14" width="30" height="22" rx="3"></rect>
+      <path d="M18 40h12M24 36v4M16 8l8 6 8-6"></path>
+      <circle cx="34" cy="20" r="1.3" fill="currentColor" stroke="none"></circle>
+      <circle cx="34" cy="26" r="1.3" fill="currentColor" stroke="none"></circle>
+    </svg>
+  </div>`;
 }
 
 function renderMethodText(text, totalInteractions) {
