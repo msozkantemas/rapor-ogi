@@ -44,12 +44,28 @@
       margin-top: 14px;
       display: flex;
       align-items: center;
-      gap: 24px;
-      font-size: 26px;
+      gap: 18px;
       color: #f2f5fa;
+      white-space: nowrap;
     }
-    .category { color: #2386ff; font-weight: 800; }
-    .divider { width: 2px; height: 36px; background: rgba(255,255,255,.72); }
+    .category {
+      color: #2386ff;
+      font-weight: 800;
+      font-size: var(--category-size, 26px);
+      line-height: 1.12;
+      white-space: nowrap;
+    }
+    .date-range {
+      font-size: var(--date-size, 26px);
+      line-height: 1.12;
+      white-space: nowrap;
+    }
+    .divider {
+      flex: 0 0 auto;
+      width: 2px;
+      height: 34px;
+      background: rgba(255,255,255,.72);
+    }
     .subtitle {
       margin-top: 10px;
       font-size: 23px;
@@ -173,7 +189,7 @@
     .chart {
       position: relative;
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 350px 1fr;
       gap: 24px;
       padding: 32px 28px 46px 24px;
       height: 520px;
@@ -193,7 +209,7 @@
     }
     .legend-item {
       display: grid;
-      grid-template-columns: 38px 1fr;
+      grid-template-columns: 31px minmax(0, 1fr);
       gap: 12px;
       align-items: center;
       height: 31px;
@@ -201,7 +217,9 @@
     }
     .legend-name {
       white-space: nowrap;
-      overflow: visible;
+      overflow: hidden;
+      text-overflow: clip;
+      min-width: 0;
     }
     .badge {
       width: 31px;
@@ -367,10 +385,10 @@
     <section class="header">
       <div>
         <h1>Dijital Performans<span class="blue">Analizi</span></h1>
-        <div class="meta">
-          <span class="category">MESSI</span>
+        <div class="meta" style="--category-size:20px; --date-size:26px;">
+          <span class="category">BELEDİYELER (Pozitif Veriler)</span>
           <span class="divider"></span>
-          <span>10 Mayıs 2026 - 120 Mayıs 2026</span>
+          <span class="date-range">11 Mayıs 2026 - 17 Mayıs 2026</span>
         </div>
         <div class="subtitle">Sosyal medya, yazılı basın ve TV verilerinin birleşik analizi</div>
       </div>
@@ -378,29 +396,29 @@
     </section>
 
     <section class="cards">
-      <article class="person-card" style="--accent:#e7e9ed; --name-size:29px;">
+      <article class="person-card" style="--accent:#e7e9ed; --name-size:14px;">
     <div class="rank">2</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/2.jpeg" alt=""></div>
     <div class="card-footer">
-      <div class="name">Zafer Şahin</div>
+      <div class="name">Konya Büyükşehir Belediyesi</div>
       <div class="shine"></div>
-      <div class="percent">7,86%</div>
+      <div class="percent">10,96%</div>
     </div>
-  </article><article class="person-card rank-1" style="--accent:#ffc619; --name-size:29px;">
+  </article><article class="person-card rank-1" style="--accent:#ffc619; --name-size:14px;">
     <div class="rank">1</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/1.jpeg" alt=""></div>
     <div class="card-footer">
-      <div class="name">Fatih Altaylı</div>
+      <div class="name">Mersin Büyükşehir Belediyesi</div>
       <div class="shine"></div>
-      <div class="percent">11,06%</div>
+      <div class="percent">11,63%</div>
     </div>
-  </article><article class="person-card" style="--accent:#f4761e; --name-size:29px;">
+  </article><article class="person-card" style="--accent:#f4761e; --name-size:14px;">
     <div class="rank">3</div>
     <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/3.jpeg" alt=""></div>
     <div class="card-footer">
-      <div class="name">Nevşin Mengü</div>
+      <div class="name">Kahramanmaraş Büyükşehir Belediyesi</div>
       <div class="shine"></div>
-      <div class="percent">7,04%</div>
+      <div class="percent">7,74%</div>
     </div>
   </article>
     </section>
@@ -408,71 +426,71 @@
     <section class="panel chart">
       <div class="chart-title">Pay Oranı (%)</div>
       <div class="legend-list">
-        <div class="legend-item" style="--accent:#ffc619; --badge-bg:linear-gradient(180deg,#ffd753,#b98100); --legend-size:22px;">
+        <div class="legend-item" style="--accent:#ffc619; --badge-bg:linear-gradient(180deg,#ffd753,#b98100); --legend-size:15px;">
     <div class="badge">1</div>
-    <div class="legend-name">Fatih Altaylı</div>
-  </div><div class="legend-item" style="--accent:#e7e9ed; --badge-bg:linear-gradient(180deg,#ffffff,#8d949d); --legend-size:22px;">
+    <div class="legend-name">Mersin Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#e7e9ed; --badge-bg:linear-gradient(180deg,#ffffff,#8d949d); --legend-size:15px;">
     <div class="badge">2</div>
-    <div class="legend-name">Zafer Şahin</div>
-  </div><div class="legend-item" style="--accent:#f4761e; --badge-bg:linear-gradient(180deg,#fb8b31,#9c3f07); --legend-size:22px;">
+    <div class="legend-name">Konya Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#f4761e; --badge-bg:linear-gradient(180deg,#fb8b31,#9c3f07); --legend-size:15px;">
     <div class="badge">3</div>
-    <div class="legend-name">Nevşin Mengü</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="legend-name">Kahramanmaraş Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">4</div>
-    <div class="legend-name">Cüneyt Özdemir</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="legend-name">Şanlıurfa Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">5</div>
-    <div class="legend-name">Yılmaz Özdil</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="legend-name">Kocaeli Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">6</div>
-    <div class="legend-name">Özlem Gürses</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="legend-name">Denizli Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">7</div>
-    <div class="legend-name">Deniz Zeyrek</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="legend-name">Hatay Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">8</div>
-    <div class="legend-name">Levent Gültekin</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="legend-name">Tekirdağ Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">9</div>
-    <div class="legend-name">Taha H. Karagöz</div>
-  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="legend-name">Samsun Büyükşehir Belediyesi</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:15px;">
     <div class="badge">10</div>
-    <div class="legend-name">Adem Metan</div>
+    <div class="legend-name">Van Büyükşehir Belediyesi</div>
   </div>
       </div>
       <div class="plot">
         <div class="grid"><span></span><span></span><span></span><span></span><span></span></div>
         <div class="bars">
-          <div class="bar-row" style="--accent:#ffc619; --value:11.06;">
+          <div class="bar-row" style="--accent:#ffc619; --value:11.63;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">11,06%</div>
-  </div><div class="bar-row" style="--accent:#e7e9ed; --value:7.86;">
+    <div class="bar-value">11,63%</div>
+  </div><div class="bar-row" style="--accent:#e7e9ed; --value:10.96;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">7,86%</div>
-  </div><div class="bar-row" style="--accent:#f4761e; --value:7.04;">
+    <div class="bar-value">10,96%</div>
+  </div><div class="bar-row" style="--accent:#f4761e; --value:7.74;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">7,04%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:6.23;">
+    <div class="bar-value">7,74%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:7.71;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">6,23%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:5.98;">
+    <div class="bar-value">7,71%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:6.42;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">5,98%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:5.02;">
+    <div class="bar-value">6,42%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:6.25;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">5,02%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:4.63;">
+    <div class="bar-value">6,25%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.77;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">4,63%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:4.2;">
+    <div class="bar-value">5,77%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.74;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">4,20%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:3.93;">
+    <div class="bar-value">5,74%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.45;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">3,93%</div>
-  </div><div class="bar-row" style="--accent:#0877f2; --value:3.33;">
+    <div class="bar-value">5,45%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.08;">
     <div class="bar-track"><div class="bar"></div></div>
-    <div class="bar-value">3,33%</div>
+    <div class="bar-value">5,08%</div>
   </div>
         </div>
         <div class="axis"><span>0%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span><span>25%</span></div>
@@ -518,7 +536,7 @@
 
     <section class="panel method">
       <div class="method-label"><span class="info">i</span><span>YÖNTEM VE KAPSAM</span></div>
-      <div class="method-text">DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10&#39;da yer alanlar<br>Bu rapor, belirtilen tarih aralığında gerçekleşen <strong>30.051.307</strong> etkileşim verisinin analiziyle oluşturulmuştur.</div>
+      <div class="method-text">DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10&#39;da yer alanlar<br>*Bu rapor, belirtilen tarih aralığında gerçekleşen 19.416.120 etkileşim verisinin analiziyle oluşturulmuştur.</div>
     </section>
   </main>
 </body>

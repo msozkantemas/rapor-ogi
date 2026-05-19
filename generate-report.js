@@ -20,12 +20,12 @@ const top3Dir = path.resolve(args.top3 || DEFAULT_TOP3_DIR);
 const logoDir = path.resolve(args.logo || DEFAULT_LOGO_DIR);
 const socialDir = path.resolve(args.social || DEFAULT_SOCIAL_DIR);
 const title = args.title || "Dijital Performans Analizi";
-const category = args.category || "MESSI";
-const dateRange = args.date || "10 Mayıs 2026 - 120 Mayıs 2026";
+const category = args.category || "BELEDİYELER (Pozitif Veriler)";
+const dateRange = args.date || "11 Mayıs 2026 - 17 Mayıs 2026";
 const totalInteractions = args.total || "30.051.307";
 const methodText = formatArgText(args.method) || [
   "DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10'da yer alanlar",
-  "Bu rapor, belirtilen tarih aralığında gerçekleşen {total} etkileşim verisinin analiziyle oluşturulmuştur."
+  "*Bu rapor, belirtilen tarih aralığında gerçekleşen 19.416.120 etkileşim verisinin analiziyle oluşturulmuştur."
 ].join("\n");
 
 const rawData = JSON.parse(fs.readFileSync(dataFile, "utf8"));
@@ -144,6 +144,16 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
   const top = rows.slice(0, 3);
   const cardOrder = [top[1], top[0], top[2]].filter(Boolean);
   const gridTicks = [0, 5, 10, 15, 20, 25];
+  const legendNameSize = Math.min(...rows.map((item) => fitFontSizeToWidth(item.name, 300, 22, 13)));
+  const topNameSize = Math.min(
+    ...cardOrder.map((person) => {
+      const rank = rows.indexOf(person) + 1;
+      const nameWidth = rank === 1 ? 336 : 282;
+      return fitFontSizeToWidth(person.name, nameWidth, 29, 14);
+    })
+  );
+  const categorySize = fitFontSizeToWidth(category, 330, 26, 18);
+  const dateSize = fitFontSizeToWidth(dateRange, 390, 26, 18);
 
   return `<!doctype html>
 <html lang="tr">
@@ -191,12 +201,28 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       margin-top: 14px;
       display: flex;
       align-items: center;
-      gap: 24px;
-      font-size: 26px;
+      gap: 18px;
       color: #f2f5fa;
+      white-space: nowrap;
     }
-    .category { color: #2386ff; font-weight: 800; }
-    .divider { width: 2px; height: 36px; background: rgba(255,255,255,.72); }
+    .category {
+      color: #2386ff;
+      font-weight: 800;
+      font-size: var(--category-size, 26px);
+      line-height: 1.12;
+      white-space: nowrap;
+    }
+    .date-range {
+      font-size: var(--date-size, 26px);
+      line-height: 1.12;
+      white-space: nowrap;
+    }
+    .divider {
+      flex: 0 0 auto;
+      width: 2px;
+      height: 34px;
+      background: rgba(255,255,255,.72);
+    }
     .subtitle {
       margin-top: 10px;
       font-size: 23px;
@@ -320,7 +346,7 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     .chart {
       position: relative;
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 350px 1fr;
       gap: 24px;
       padding: 32px 28px 46px 24px;
       height: 520px;
@@ -340,7 +366,7 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .legend-item {
       display: grid;
-      grid-template-columns: 38px 1fr;
+      grid-template-columns: 31px minmax(0, 1fr);
       gap: 12px;
       align-items: center;
       height: 31px;
@@ -348,7 +374,9 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .legend-name {
       white-space: nowrap;
-      overflow: visible;
+      overflow: hidden;
+      text-overflow: clip;
+      min-width: 0;
     }
     .badge {
       width: 31px;
@@ -514,10 +542,10 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     <section class="header">
       <div>
         <h1>${escapeHtml(title).replace(" Analizi", "<span class=\"blue\">Analizi</span>")}</h1>
-        <div class="meta">
+        <div class="meta" style="--category-size:${categorySize}px; --date-size:${dateSize}px;">
           <span class="category">${escapeHtml(category)}</span>
           <span class="divider"></span>
-          <span>${escapeHtml(dateRange)}</span>
+          <span class="date-range">${escapeHtml(dateRange)}</span>
         </div>
         <div class="subtitle">Sosyal medya, yazılı basın ve TV verilerinin birleşik analizi</div>
       </div>
@@ -525,13 +553,13 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     </section>
 
     <section class="cards">
-      ${cardOrder.map((person) => renderCard(person, rows.indexOf(person) + 1, top3Images)).join("")}
+      ${cardOrder.map((person) => renderCard(person, rows.indexOf(person) + 1, top3Images, topNameSize)).join("")}
     </section>
 
     <section class="panel chart">
       <div class="chart-title">Pay Oranı (%)</div>
       <div class="legend-list">
-        ${rows.map((item, index) => renderLegend(item, index)).join("")}
+        ${rows.map((item, index) => renderLegend(item, index, legendNameSize)).join("")}
       </div>
       <div class="plot">
         <div class="grid">${gridTicks.slice(1).map(() => "<span></span>").join("")}</div>
@@ -575,11 +603,11 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
 </html>`;
 }
 
-function renderCard(person, rank, top3Images) {
+function renderCard(person, rank, top3Images, nameSize) {
   const theme = getTheme(rank);
   const image = top3Images[rank] || "";
   const isRankOne = rank === 1 ? " rank-1" : "";
-  return `<article class="person-card${isRankOne}" style="--accent:${theme.accent}; --name-size:${fitFontSize(person.name, 29, 22)}px;">
+  return `<article class="person-card${isRankOne}" style="--accent:${theme.accent}; --name-size:${nameSize}px;">
     <div class="rank">${rank}</div>
     <div class="portrait">${image ? `<img src="${toFileUrl(image)}" alt="">` : `<div class="placeholder">${escapeHtml(initials(person.name))}</div>`}</div>
     <div class="card-footer">
@@ -590,10 +618,10 @@ function renderCard(person, rank, top3Images) {
   </article>`;
 }
 
-function renderLegend(item, index) {
+function renderLegend(item, index, legendNameSize) {
   const rank = index + 1;
   const theme = getTheme(rank);
-  return `<div class="legend-item" style="--accent:${theme.accent}; --badge-bg:${theme.badge}; --legend-size:${fitFontSize(item.name, 22, 17)}px;">
+  return `<div class="legend-item" style="--accent:${theme.accent}; --badge-bg:${theme.badge}; --legend-size:${legendNameSize}px;">
     <div class="badge">${rank}</div>
     <div class="legend-name">${escapeHtml(item.name)}</div>
   </div>`;
@@ -720,13 +748,16 @@ function formatPercent(value) {
   return `${Number(value).toFixed(2).replace(".", ",")}%`;
 }
 
-function fitFontSize(text, maxSize, minSize) {
-  const length = Array.from(String(text)).length;
-  if (length <= 13) return maxSize;
-  if (length <= 16) return Math.max(minSize, maxSize - 2);
-  if (length <= 19) return Math.max(minSize, maxSize - 4);
-  if (length <= 22) return Math.max(minSize, maxSize - 6);
-  return minSize;
+function fitFontSizeToWidth(text, maxWidth, maxSize, minSize) {
+  const weightedLength = Array.from(String(text)).reduce((total, char) => {
+    if (char === " ") return total + 0.35;
+    if ("İIWMĞÜŞÖÇ".includes(char)) return total + 1.18;
+    if (char === "." || char === "," || char === "-") return total + 0.35;
+    return total + 1;
+  }, 0);
+
+  const estimatedSize = Math.floor(maxWidth / Math.max(1, weightedLength * 0.58));
+  return Math.max(minSize, Math.min(maxSize, estimatedSize));
 }
 
 function formatArgText(value) {
