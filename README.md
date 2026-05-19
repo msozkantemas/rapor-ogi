@@ -41,6 +41,14 @@ Farklı dosya veya klasörlerle:
 node generate-report.js --data data.json --top3 top3 --logo logo --social social-media --output rapor.pdf
 ```
 
+Yöntem ve kapsam metnini değiştirmek için:
+
+```bash
+node generate-report.js --method "DİDEK tarafından belirlenen listenin ilk 10 sonucu\nBu rapor {total} etkileşim verisiyle oluşturulmuştur."
+```
+
+`--method` içinde `{total}` yazarsan `--total` değeriyle değiştirilir. Satır kırmak için `\n` kullanabilirsin.
+
 Sadece HTML önizleme üretmek için:
 
 ```bash

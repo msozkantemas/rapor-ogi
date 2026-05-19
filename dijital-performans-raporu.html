@@ -28,7 +28,7 @@
     }
     .header {
       display: grid;
-      grid-template-columns: 1fr 250px;
+      grid-template-columns: 1fr 300px;
       gap: 24px;
       align-items: start;
     }
@@ -57,13 +57,13 @@
     }
     .brand {
       text-align: center;
-      min-height: 104px;
+      min-height: 126px;
       display: grid;
       place-items: center;
     }
     .brand img {
-      max-width: 230px;
-      max-height: 104px;
+      max-width: 285px;
+      max-height: 126px;
       object-fit: contain;
       display: block;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,.28));
@@ -174,8 +174,8 @@
       display: grid;
       grid-template-columns: 280px 1fr;
       gap: 24px;
-      padding: 28px 28px 34px 24px;
-      height: 504px;
+      padding: 32px 28px 46px 24px;
+      height: 520px;
     }
     .chart-title {
       position: absolute;
@@ -188,14 +188,14 @@
       display: grid;
       gap: 8px;
       align-content: start;
-      padding-top: 10px;
+      padding-top: 24px;
     }
     .legend-item {
       display: grid;
       grid-template-columns: 38px 1fr;
       gap: 12px;
       align-items: center;
-      min-height: 34px;
+      height: 31px;
       font-size: var(--legend-size, 22px);
     }
     .legend-name {
@@ -203,24 +203,24 @@
       overflow: visible;
     }
     .badge {
-      width: 34px;
-      height: 34px;
+      width: 31px;
+      height: 31px;
       border: 1.5px solid var(--accent);
       border-radius: 8px;
       display: grid;
       place-items: center;
       color: #fff;
       background: var(--badge-bg);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
     }
     .plot {
       position: relative;
-      padding: 32px 0 28px;
+      padding: 24px 0 36px;
     }
     .grid {
       position: absolute;
-      inset: 0 0 28px 0;
+      inset: 0 0 36px 0;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       border-left: 2px solid rgba(255,255,255,.8);
@@ -232,17 +232,17 @@
       position: relative;
       z-index: 2;
       display: grid;
-      gap: 13px;
+      gap: 8px;
     }
     .bar-row {
       display: grid;
       grid-template-columns: 1fr 88px;
       gap: 12px;
       align-items: center;
-      min-height: 31px;
+      height: 31px;
     }
     .bar-track {
-      height: 25px;
+      height: 23px;
       position: relative;
     }
     .bar {
@@ -268,6 +268,7 @@
       font-size: 20px;
     }
     .sources {
+      margin-top: 22px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 0;
@@ -351,7 +352,7 @@
       font-size: 17px;
       line-height: 1.16;
     }
-    .method-text strong { color: #fff; }
+    .method-text strong { color: #fff; font-weight: 800; }
   </style>
 </head>
 <body>
@@ -497,10 +498,7 @@
 
     <section class="panel method">
       <div class="method-label"><span class="info">i</span><span>YÖNTEM VE KAPSAM</span></div>
-      <div class="method-text">
-        DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10'da yer alanlar<br>
-        Bu rapor, belirtilen tarih aralığında gerçekleşen <strong>30.051.307</strong> etkileşim verisinin analiziyle oluşturulmuştur.
-      </div>
+      <div class="method-text">DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10&#39;da yer alanlar<br>Bu rapor, belirtilen tarih aralığında gerçekleşen <strong>30.051.307</strong> etkileşim verisinin analiziyle oluşturulmuştur.</div>
     </section>
   </main>
 </body>

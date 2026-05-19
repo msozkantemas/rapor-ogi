@@ -321,8 +321,8 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       display: grid;
       grid-template-columns: 280px 1fr;
       gap: 24px;
-      padding: 34px 28px 34px 24px;
-      height: 504px;
+      padding: 32px 28px 46px 24px;
+      height: 520px;
     }
     .chart-title {
       position: absolute;
@@ -333,16 +333,16 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
     }
     .legend-list {
       display: grid;
-      gap: 13px;
+      gap: 8px;
       align-content: start;
-      padding-top: 32px;
+      padding-top: 24px;
     }
     .legend-item {
       display: grid;
       grid-template-columns: 38px 1fr;
       gap: 12px;
       align-items: center;
-      min-height: 31px;
+      height: 31px;
       font-size: var(--legend-size, 22px);
     }
     .legend-name {
@@ -350,24 +350,24 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       overflow: visible;
     }
     .badge {
-      width: 34px;
-      height: 34px;
+      width: 31px;
+      height: 31px;
       border: 1.5px solid var(--accent);
       border-radius: 8px;
       display: grid;
       place-items: center;
       color: #fff;
       background: var(--badge-bg);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
     }
     .plot {
       position: relative;
-      padding: 32px 0 28px;
+      padding: 24px 0 36px;
     }
     .grid {
       position: absolute;
-      inset: 0 0 28px 0;
+      inset: 0 0 36px 0;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       border-left: 2px solid rgba(255,255,255,.8);
@@ -379,17 +379,17 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       position: relative;
       z-index: 2;
       display: grid;
-      gap: 13px;
+      gap: 8px;
     }
     .bar-row {
       display: grid;
       grid-template-columns: 1fr 88px;
       gap: 12px;
       align-items: center;
-      min-height: 31px;
+      height: 31px;
     }
     .bar-track {
-      height: 25px;
+      height: 23px;
       position: relative;
     }
     .bar {
@@ -415,6 +415,7 @@ function renderHtml({ rows, title, category, dateRange, totalInteractions, metho
       font-size: 20px;
     }
     .sources {
+      margin-top: 22px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 0;
