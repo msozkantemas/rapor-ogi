@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dijital Performans Analizi</title>
+  <style>
+    @page { size: 1080px 1580px; margin: 0; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #06111c;
+      color: #f5f7fb;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page {
+      position: relative;
+      width: 1080px;
+      height: 1580px;
+      overflow: hidden;
+      padding: 28px 30px 20px;
+      background:
+        radial-gradient(circle at 86% 14%, rgba(27,111,207,.38) 0 1px, transparent 2px) 0 0 / 18px 18px,
+        radial-gradient(circle at 58% 38%, rgba(14,83,151,.26), transparent 34%),
+        linear-gradient(180deg, #07131f 0%, #03101a 58%, #03101a 100%);
+    }
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      gap: 24px;
+      align-items: start;
+    }
+    h1 {
+      margin: 0;
+      font-size: 52px;
+      line-height: .98;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+    .blue { color: #1278ff; display: block; }
+    .meta {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 26px;
+      color: #f2f5fa;
+    }
+    .category { color: #2386ff; font-weight: 800; }
+    .divider { width: 2px; height: 36px; background: rgba(255,255,255,.72); }
+    .subtitle {
+      margin-top: 10px;
+      font-size: 23px;
+      color: #e8edf5;
+    }
+    .brand {
+      text-align: center;
+      min-height: 104px;
+      display: grid;
+      place-items: center;
+    }
+    .brand img {
+      max-width: 230px;
+      max-height: 104px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,.28));
+    }
+    .brand-fallback {
+      letter-spacing: 10px;
+      font-size: 40px;
+      font-weight: 600;
+    }
+    .brand-fallback small {
+      display: block;
+      margin-top: 4px;
+      letter-spacing: 1px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .cards {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1.18fr 1fr;
+      gap: 16px;
+      align-items: end;
+    }
+    .person-card {
+      position: relative;
+      height: 420px;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 24%, rgba(255,255,255,.42), rgba(19,26,35,.76) 39%, rgba(2,13,23,.96) 78%),
+        #0b1723;
+      box-shadow: inset 0 0 55px rgba(255,255,255,.07), 0 16px 36px rgba(0,0,0,.28);
+    }
+    .person-card.rank-1 { height: 440px; }
+    .rank {
+      position: absolute;
+      z-index: 3;
+      left: 22px;
+      top: 10px;
+      color: var(--accent);
+      font-size: 62px;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .portrait {
+      position: absolute;
+      inset: 12px 16px 98px;
+      display: flex;
+      justify-content: center;
+      align-items: end;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: drop-shadow(0 16px 20px rgba(0,0,0,.42));
+      border-radius: 6px;
+    }
+    .portrait .placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: rgba(255,255,255,.55);
+      font-size: 92px;
+      font-weight: 800;
+      background: radial-gradient(circle, rgba(255,255,255,.28), rgba(255,255,255,.04) 60%);
+    }
+    .card-footer {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 16px;
+      text-align: center;
+    }
+    .name {
+      font-size: var(--name-size, 29px);
+      line-height: 1.1;
+      font-weight: 800;
+      text-shadow: 0 2px 8px #000;
+      white-space: nowrap;
+      overflow: visible;
+    }
+    .shine {
+      margin: 10px auto 10px;
+      width: 82%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: .72;
+    }
+    .percent {
+      color: var(--accent);
+      font-size: 52px;
+      line-height: .92;
+      font-weight: 900;
+    }
+    .panel {
+      margin-top: 18px;
+      border: 1px solid rgba(98,138,184,.36);
+      border-radius: 10px;
+      background: rgba(3,17,29,.68);
+      box-shadow: inset 0 0 24px rgba(44,121,214,.08);
+    }
+    .chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      padding: 28px 28px 34px 24px;
+      height: 504px;
+    }
+    .chart-title {
+      position: absolute;
+      top: 12px;
+      right: 28px;
+      color: #e6edf7;
+      font-size: 22px;
+    }
+    .legend-list {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding-top: 10px;
+    }
+    .legend-item {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-height: 34px;
+      font-size: var(--legend-size, 22px);
+    }
+    .legend-name {
+      white-space: nowrap;
+      overflow: visible;
+    }
+    .badge {
+      width: 34px;
+      height: 34px;
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--badge-bg);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .plot {
+      position: relative;
+      padding: 32px 0 28px;
+    }
+    .grid {
+      position: absolute;
+      inset: 0 0 28px 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-left: 2px solid rgba(255,255,255,.8);
+    }
+    .grid span {
+      border-right: 1px dashed rgba(150,112,154,.65);
+    }
+    .bars {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 13px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 1fr 88px;
+      gap: 12px;
+      align-items: center;
+      min-height: 31px;
+    }
+    .bar-track {
+      height: 25px;
+      position: relative;
+    }
+    .bar {
+      height: 100%;
+      width: calc(var(--value) / 15 * 100%);
+      min-width: 18px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, white 20%), var(--accent) 60%, color-mix(in srgb, var(--accent) 62%, black 38%));
+      box-shadow: 0 3px 9px color-mix(in srgb, var(--accent) 38%, transparent);
+    }
+    .bar-value {
+      color: #f9fbff;
+      font-size: 22px;
+      text-shadow: 0 2px 5px #000;
+    }
+    .axis {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      color: #f1f4fa;
+      font-size: 20px;
+    }
+    .sources {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      padding: 18px 20px;
+      height: 112px;
+    }
+    .source {
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 0 18px;
+      border-right: 1px solid rgba(255,255,255,.45);
+    }
+    .source:last-child { border-right: 0; }
+    .source-title {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .source-text {
+      color: #dce4ef;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .source-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57,126,209,.5);
+      background: radial-gradient(circle, rgba(20,96,180,.35), rgba(8,22,35,.7));
+      font-size: 34px;
+    }
+    .social-icons {
+      width: 62px;
+      display: grid;
+      grid-template-columns: repeat(2, 27px);
+      gap: 7px;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-icons img {
+      width: 27px;
+      height: 27px;
+      object-fit: contain;
+      border-radius: 50%;
+      display: block;
+      background: rgba(255,255,255,.08);
+    }
+    .method {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      padding: 12px 20px;
+      align-items: center;
+      height: 94px;
+    }
+    .method-label {
+      color: #2479d8;
+      font-size: 17px;
+      border-right: 1px solid rgba(255,255,255,.62);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      height: 64px;
+    }
+    .info {
+      width: 42px;
+      height: 42px;
+      border: 3px solid rgba(255,255,255,.78);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 24px;
+    }
+    .method-text {
+      padding-left: 24px;
+      color: #d9e1ec;
+      font-size: 17px;
+      line-height: 1.16;
+    }
+    .method-text strong { color: #fff; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="header">
+      <div>
+        <h1>Dijital Performans<span class="blue">Analizi</span></h1>
+        <div class="meta">
+          <span class="category">GAZETECİLER</span>
+          <span class="divider"></span>
+          <span>4 Mayıs 2026 - 10 Mayıs 2026</span>
+        </div>
+        <div class="subtitle">Sosyal medya, yazılı basın ve TV verilerinin birleşik analizi</div>
+      </div>
+      <div class="brand"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/logo/logo.png" alt=""></div>
+    </section>
+
+    <section class="cards">
+      <article class="person-card" style="--accent:#e7e9ed; --name-size:29px;">
+    <div class="rank">2</div>
+    <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/2.jpeg" alt=""></div>
+    <div class="card-footer">
+      <div class="name">Zafer Şahin</div>
+      <div class="shine"></div>
+      <div class="percent">7,86%</div>
+    </div>
+  </article><article class="person-card rank-1" style="--accent:#ffc619; --name-size:29px;">
+    <div class="rank">1</div>
+    <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/1.jpeg" alt=""></div>
+    <div class="card-footer">
+      <div class="name">Fatih Altaylı</div>
+      <div class="shine"></div>
+      <div class="percent">11,06%</div>
+    </div>
+  </article><article class="person-card" style="--accent:#f4761e; --name-size:29px;">
+    <div class="rank">3</div>
+    <div class="portrait"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/top3/3.jpeg" alt=""></div>
+    <div class="card-footer">
+      <div class="name">Nevşin Mengü</div>
+      <div class="shine"></div>
+      <div class="percent">7,04%</div>
+    </div>
+  </article>
+    </section>
+
+    <section class="panel chart">
+      <div class="chart-title">Pay Oranı (%)</div>
+      <div class="legend-list">
+        <div class="legend-item" style="--accent:#ffc619; --badge-bg:linear-gradient(180deg,#ffd753,#b98100); --legend-size:22px;">
+    <div class="badge">1</div>
+    <div class="legend-name">Fatih Altaylı</div>
+  </div><div class="legend-item" style="--accent:#e7e9ed; --badge-bg:linear-gradient(180deg,#ffffff,#8d949d); --legend-size:22px;">
+    <div class="badge">2</div>
+    <div class="legend-name">Zafer Şahin</div>
+  </div><div class="legend-item" style="--accent:#f4761e; --badge-bg:linear-gradient(180deg,#fb8b31,#9c3f07); --legend-size:22px;">
+    <div class="badge">3</div>
+    <div class="legend-name">Nevşin Mengü</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="badge">4</div>
+    <div class="legend-name">Cüneyt Özdemir</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="badge">5</div>
+    <div class="legend-name">Yılmaz Özdil</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="badge">6</div>
+    <div class="legend-name">Özlem Gürses</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="badge">7</div>
+    <div class="legend-name">Deniz Zeyrek</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="badge">8</div>
+    <div class="legend-name">Levent Gültekin</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:20px;">
+    <div class="badge">9</div>
+    <div class="legend-name">Taha H. Karagöz</div>
+  </div><div class="legend-item" style="--accent:#0877f2; --badge-bg:rgba(8,18,31,.78); --legend-size:22px;">
+    <div class="badge">10</div>
+    <div class="legend-name">Adem Metan</div>
+  </div>
+      </div>
+      <div class="plot">
+        <div class="grid"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="bars">
+          <div class="bar-row" style="--accent:#ffc619; --value:11.06;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">11,06%</div>
+  </div><div class="bar-row" style="--accent:#e7e9ed; --value:7.86;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">7,86%</div>
+  </div><div class="bar-row" style="--accent:#f4761e; --value:7.04;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">7,04%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:6.23;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">6,23%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.98;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">5,98%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:5.02;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">5,02%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:4.63;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">4,63%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:4.2;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">4,20%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:3.93;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">3,93%</div>
+  </div><div class="bar-row" style="--accent:#0877f2; --value:3.33;">
+    <div class="bar-track"><div class="bar"></div></div>
+    <div class="bar-value">3,33%</div>
+  </div>
+        </div>
+        <div class="axis"><span>0%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span><span>25%</span></div>
+      </div>
+    </section>
+
+    <section class="panel sources">
+      <div class="source">
+        <div class="social-icons"><img src="file:///Users/trendsunum/Desktop/rapor-ogi/social-media/x.jpeg" alt=""><img src="file:///Users/trendsunum/Desktop/rapor-ogi/social-media/instagram.jpeg" alt=""><img src="file:///Users/trendsunum/Desktop/rapor-ogi/social-media/facebook.jpeg" alt=""><img src="file:///Users/trendsunum/Desktop/rapor-ogi/social-media/youtube.jpeg" alt=""></div>
+        <div>
+          <div class="source-title">Sosyal Medya</div>
+          <div class="source-text">X, Instagram, Facebook,<br>YouTube, Linkedin</div>
+        </div>
+      </div>
+      <div class="source">
+        <div class="source-icon">▤</div>
+        <div>
+          <div class="source-title">Yazılı Basın</div>
+          <div class="source-text">Haberler, Köşe yazıları,<br>Gazeteler, Blog/Forum/Sözlük</div>
+        </div>
+      </div>
+      <div class="source">
+        <div class="source-icon">▣</div>
+        <div>
+          <div class="source-title">TV</div>
+          <div class="source-text">Ulusal TV kanalları ve<br>televizyon programları</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel method">
+      <div class="method-label"><span class="info">i</span><span>YÖNTEM VE KAPSAM</span></div>
+      <div class="method-text">
+        DİDEK (Dijital İzleme ve Değerleme Kurulu) tarafından belirlenen 39 gazeteci arasından ilk 10'da yer alanlar<br>
+        Bu rapor, belirtilen tarih aralığında gerçekleşen <strong>30.051.307</strong> etkileşim verisinin analiziyle oluşturulmuştur.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
